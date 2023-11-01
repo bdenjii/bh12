@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jogo 5 meses</title>
+    <title>jogo 5 meses</title>
     <style>
         body {
             margin: 0;
             overflow: hidden;
+            font-size: 30px; 
+            background-color: lightsteelblue; 
         }
 
         #player {
@@ -15,26 +17,23 @@
             bottom: 10px;
             left: 50%;
             transform: translateX(-50%);
-            width: 50px;
-            height: 50px;
-            background-color: blue;
         }
 
         .obstacle {
             position: absolute;
             width: 50px;
             height: 50px;
-            background-color: red;
+            font-size: 40px; 
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <div id="player"></div>
+    <div id="player">👸🏾</div>
 
     <script>
         const player = document.getElementById('player');
         let score = 0;
-        let days = 0;
 
         document.addEventListener('keydown', function(event) {
             const key = event.key;
@@ -48,55 +47,51 @@
         });
 
         function createObstacle() {
-            const obstacle = document.createElement('div');
-            obstacle.className = 'obstacle';
-            obstacle.style.left = Math.random() * (window.innerWidth - 50) + 'px';
-            obstacle.style.top = '0px';
-            document.body.appendChild(obstacle);
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const obstacle = document.createElement('div');
+                    obstacle.className = 'obstacle';
+                    
+                    obstacle.innerHTML = '💘';
+                    obstacle.style.left = Math.random() * (window.innerWidth - 50) + 'px';
+                    obstacle.style.top = '0px';
+                    document.body.appendChild(obstacle);
 
-            const moveObstacle = setInterval(function() {
-                const obstaclePosition = parseInt(window.getComputedStyle(obstacle).top);
+                    const moveObstacle = setInterval(function() {
+                        const obstaclePosition = parseInt(window.getComputedStyle(obstacle).top);
 
-                if (obstaclePosition < window.innerHeight) {
-                    obstacle.style.top = obstaclePosition + 15 + 'px';
-                } else {
-                    clearInterval(moveObstacle);
-                    document.body.removeChild(obstacle);
-                    score += 10;
+                        if (obstaclePosition < window.innerHeight) {
+                            obstacle.style.top = obstaclePosition + 15 + 'px';
+                        } else {
+                            clearInterval(moveObstacle);
+                            document.body.removeChild(obstacle);
+                            score += 10;
 
-                    if (score >= 153) {
-                        
-                        alert('feliz 5 meses meu amor, obrigado por todo amor que tem me proporcionado ao longo dessses 153 dias, eu te amo muito minha princesa, vc é e sempre será o amor da minha vida! Pontuação: ' + score);
-                        window.location.reload();
-                    }
-                }
+                            if (score >= 153) {
+                                alert('feliz 5 meses meu amor!! 153 dias ao lado da mulher mais incrível do mundo, obrigado por tudo minha princesa, pela paciência, aprendizado e principalmente por estar curando feridas que vc nem causou, saiba que sou imensamente feliz por te ter na minha vida e não vejo a hora de tê-la nos meus braços e poder te dar todo o amor que existe em mim, eu te amo pra sempre ^^');
+                                window.location.reload();
+                            }
+                        }
 
-                const playerRect = player.getBoundingClientRect();
-                const obstacleRect = obstacle.getBoundingClientRect();
+                        const playerRect = player.getBoundingClientRect();
+                        const obstacleRect = obstacle.getBoundingClientRect();
 
-                if (
-                    playerRect.bottom > obstacleRect.top &&
-                    playerRect.top < obstacleRect.bottom &&
-                    playerRect.right > obstacleRect.left &&
-                    playerRect.left < obstacleRect.right
-                ) {
-                    clearInterval(moveObstacle);
-                    alert('Game Over! Pontuação: ' + score);
-                    window.location.reload();
-                }
-            }, 30);
+                        if (
+                            playerRect.bottom > obstacleRect.top &&
+                            playerRect.top < obstacleRect.bottom &&
+                            playerRect.right > obstacleRect.left &&
+                            playerRect.left < obstacleRect.right
+                        ) {
+                            clearInterval(moveObstacle);
+                            alert('vish, deu ruim, tente novamente -.- Pontuação: ' + score);
+                            window.location.reload();
+                        }
+                    }, 30);
+                }, i * 80);
+            }
         }
 
-        
-        setInterval(function() {
-            createObstacle();
-            days += 1;
-
-            if (days > 50) {
-                clearInterval();
-                setInterval(createObstacle, 800);
-            }
-        }, 2000);
+        setInterval(createObstacle, 1500);
     </script>
 </body>
 </html>
